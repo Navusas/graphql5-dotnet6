@@ -2,7 +2,7 @@ using GraphQL.Types;
 
 namespace GraphQLAPI.Entities;
 
-public class ConsumerType : ObjectGraphType<Consumer> {
+public class ConsumerType : ObjectGraphType<Customer> {
     public ConsumerType() {
         Name = "consumer";
 
@@ -11,7 +11,7 @@ public class ConsumerType : ObjectGraphType<Consumer> {
         Field(x => x.FirstName).Description("The first name of the consumer");
         Field(x => x.LastName).Description("The last name of the consumer");
         Field(x => x.Id);
-        Field(x => x.Location, nullable: true);
+        Field(x => x.Location, nullable: true); 
 
     }
 }

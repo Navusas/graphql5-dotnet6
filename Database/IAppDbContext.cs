@@ -5,5 +5,5 @@ namespace GraphQLAPI;
 
  public interface IAppDbContext
  {
-     DbSet<Consumer> Consumers { get; }
+     DbSet<Customer> Consumers { get; }
  }

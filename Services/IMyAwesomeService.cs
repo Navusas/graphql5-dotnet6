@@ -4,6 +4,7 @@ namespace GraphQLAPI;
 
 public interface IMyAwesomeService
 {
-    Consumer? GetByName(string name);
-    Task<IEnumerable<Consumer>> GetAll();
+    Customer? GetByName(string name);
+    Task<IEnumerable<Customer>> GetAll();
+    Task<IEnumerable<VirtualBook>> GetAllVirtualBooks();
 }

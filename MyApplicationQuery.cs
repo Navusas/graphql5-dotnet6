@@ -10,15 +10,17 @@ public class MyApplicationQuery : ObjectGraphType<object>
 {
     public MyApplicationQuery()
     {
-        Name = "Query";
+        Name = "NoIdeaWhereThisIsBeingUsed";
 
+        // This is just an example of how to construct the same query, but just using builder method
+        // instead of the <some other> method 
         //Field<ConsumerType>().Name("consumer")
         //   .Resolve()
         //   .WithScope() // creates a service scope as described above; not necessary for serial execution
         //   .WithService<AppDbContext>()
         //   .Resolve((context, db) => db.Consumers.FirstOrDefault(x => x.FirstName.Equals("Hello World")));
 
-        FieldAsync<ListGraphType<ConsumerType>, IEnumerable<Consumer>>(
+        FieldAsync<ListGraphType<ConsumerType>, IEnumerable<Customer>>(
             "consumers",
             resolve: async context =>
             {
@@ -37,5 +39,15 @@ public class MyApplicationQuery : ObjectGraphType<object>
                 return services.GetRequiredService<IMyAwesomeService>().GetAll().Result.First();
             }
         );
+
+        FieldAsync<ListGraphType<VirtualBookType>, IEnumerable<VirtualBook>>(
+            "virtualBooks",
+            resolve: async context =>
+            {
+                using var scope = context.RequestServices.CreateScope();
+                var services = scope.ServiceProvider;
+                return await services.GetRequiredService<IMyAwesomeService>().GetAllVirtualBooks();
+            }
+            );
     }
 }

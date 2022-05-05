@@ -47,14 +47,21 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
 
-    var faker = new Faker<Consumer>()
+    var faker = new Faker<Customer>()
         .RuleFor(r => r.FirstName, f => f.Name.FirstName())
         .RuleFor(r => r.LastName, f => f.Name.LastName())
         .RuleFor(r => r.Id, f => Guid.NewGuid())
         .RuleFor(r => r.Location, f => f.Address.Country());
 
-    var fakeConsumers = faker.Generate(25);
-    context.Consumers.AddRange(fakeConsumers);
+
+    var bookFaker = new Faker<VirtualBook>()
+        .RuleFor(r => r.Id, f => Guid.NewGuid())
+        .RuleFor(x => x.Title, f => f.Lorem.Sentence())
+        .RuleFor(x => x.Description, f => f.Lorem.Text())
+        .RuleFor(x => x.PurchasedBy, f => faker.Generate(new Random().Next(0, 10)));
+
+    var fakeData = bookFaker.Generate(25);
+    context.VirtualBooks.AddRange(fakeData);
     context.SaveChanges();
 }
 
